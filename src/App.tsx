@@ -1,34 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+
+import './App.css';
+
+type TimePeriod = 'week' | 'month' | 'year';
 
 function App() {
-    const [count, setCount] = useState(0)
+    const [assets, setAssets] = useState([]);
+    const [timePeriod, setTimePeriod] = useState<TimePeriod>('week');
 
     return (
-        <>
-            <div className="bg-primary">
-                <a href="https://vitejs.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </>
+        <main className="container">
+            <h1>Crypto asset tracker</h1>
+
+            {/**
+             * Component to load asset symbols, it can be populated from a list or from the user's assets
+             *
+             * Nice to have: multiple selection to compare between one or more asset
+             *
+             * <CustomSelect onChange={value => {}} options={[{ label: '', value: '' }]} value={assets} />
+             *  */}
+
+            {/*
+             * Component to handle the state of the performance comparison
+             *
+             * <Switch onChange={value => {}} options={['week', 'month', 'year']} value={timePeriod} />
+             * * */}
+
+            {/*
+             * Component to handle the performance comparison by period of time selected
+             *
+             * <Chart data={[]} />
+             * */}
+        </main>
     )
 }
 
