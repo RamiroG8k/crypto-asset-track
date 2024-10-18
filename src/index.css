@@ -9,7 +9,7 @@
 
     --color-background: 0deg 0% 90%;
     --color-content: 0deg 0% 0%;
-    --color-primary: 150deg 66% 35%;
+    --color-primary: 25deg 100% 55%;
     --color-accent: 225deg 15% 60%;
 }
 
@@ -17,7 +17,7 @@
     :root {
         --color-background: 0deg 0% 10%;
         --color-content: 0deg 0% 100%;
-        --color-primary: 150deg 66% 35%;
+        --color-primary: 25deg 100% 55%;
         --color-accent: 225deg 15% 60%;
     }
 }
@@ -25,4 +25,10 @@
 body {
     background: hsl(var(--color-background));
     color: hsl(var(--color-content));
+}
+
+@layer components {
+    .center {
+        @apply flex flex-col items-center justify-center;
+    };
 }

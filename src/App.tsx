@@ -1,24 +1,42 @@
 import { useState } from 'react';
 
 import './App.css';
+import Select from './components/Select';
+import { type Option } from './components/Select/types';
 
 type TimePeriod = 'week' | 'month' | 'year';
 
+const FIXED_ASSETS: Option[] = [
+    {
+        label: 'Bitcoin',
+        value: 'BTC'
+    },
+    {
+        label: 'Ethereum',
+        value: 'ETH'
+    },
+    {
+        label: 'Usdt dollar',
+        value: 'USDT'
+    }
+];
+
 function App() {
-    const [assets, setAssets] = useState([]);
+    const [assets, setAssets] = useState<string[]>([]);
     const [timePeriod, setTimePeriod] = useState<TimePeriod>('week');
 
     return (
         <main className="container">
             <h1>Crypto asset tracker</h1>
 
-            {/**
-             * Component to load asset symbols, it can be populated from a list or from the user's assets
-             *
-             * Nice to have: multiple selection to compare between one or more asset
-             *
-             * <CustomSelect onChange={value => {}} options={[{ label: '', value: '' }]} value={assets} />
-             *  */}
+            <div className="center">
+                <Select
+                    multiple
+                    onValueChange={setAssets}
+                    options={FIXED_ASSETS}
+                    values={assets}
+                />
+            </div>
 
             {/*
              * Component to handle the state of the performance comparison
