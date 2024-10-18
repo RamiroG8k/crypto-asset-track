@@ -4,8 +4,7 @@ export type Option = {
 };
 
 export interface SelectProps extends React.HTMLProps<HTMLSelectElement> {
-    multiple?: boolean;
-    onValueChange: (values: string[]) => void;
+    onValueChange: (value: string) => void;
     options: Option[];
-    values: string[];
+    values?: string[];
 };

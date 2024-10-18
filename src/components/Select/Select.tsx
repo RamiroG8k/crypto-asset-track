@@ -2,20 +2,8 @@ import { useState } from 'react';
 import { SelectProps } from './types';
 import { cn } from '../../utils/cn';
 
-const Select: React.FC<SelectProps> = ({ onValueChange, options, values = [], ...props }) => {
+const Select: React.FC<SelectProps> = ({ onValueChange, options, values = [] }) => {
     const [isOpen, setIsOpen] = useState(false);
-
-    const handleValueChange = (value: string) => {
-        if (props.multiple) {
-            if (values?.includes(value)) {
-                onValueChange(values.filter(item => item !== value));
-            } else {
-                onValueChange([...values, value]);
-            }
-        } else {
-            onValueChange([value]);
-        }
-    };
 
     return (
         <div
@@ -39,11 +27,11 @@ const Select: React.FC<SelectProps> = ({ onValueChange, options, values = [], ..
                 {options && options.map(({ label, value }) => (
                     <button
                         className={cn(
-                            'h-8 border border-content/10 rounded-lg',
+                            'px-4 py-1 text-left border border-content/10 rounded-lg',
                             values.includes(value) && 'bg-primary/20'
                         )}
                         key={value}
-                        onClick={() => handleValueChange(value)}
+                        onClick={() => onValueChange(value)}
                         type="button"
                         value={value}
                     >

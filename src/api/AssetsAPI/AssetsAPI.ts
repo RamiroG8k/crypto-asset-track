@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { type Asset } from './types';
+import { AssetData, type Asset } from './types';
 
 class AssetsAPI {
     private readonly client;
@@ -19,22 +19,13 @@ class AssetsAPI {
 
             return true;
         } catch (err) {
+            console.warn(err);
             throw new Error('HEALTH_CHECK_FAILED');
         }
     }
 
-    async getCoinsList(cache = true): Promise<Asset[]> {
+    async getCoinsList(): Promise<Asset[]> {
         try {
-            const cacheKey = 'assets';
-
-            if (cache) {
-                const cachedAssets = localStorage.getItem(cacheKey);
-
-                if (cachedAssets) {
-                    return JSON.parse(cachedAssets) as Asset[];
-                };
-            }
-
             const { data } = await this.client.get('/coins/markets', {
                 params: {
                     category: 'layer-1',
@@ -44,11 +35,29 @@ class AssetsAPI {
                 }
             });
 
-            localStorage.setItem(cacheKey, JSON.stringify(data));
-
             return data;
         } catch (err) {
+            console.warn(err);
             throw new Error('FAILED_TO_GET_ASSETS');
+        }
+    }
+
+    async getHistoricalData(assetId: string, days: 7 | 30 | 365): Promise<AssetData> {
+        try {
+            const { data } = await this.client.get(`/coins/${assetId}/market_chart`, {
+                params: {
+                    days,
+                    id: assetId,
+                    interval: 'daily',
+                    precision: 2,
+                    vs_currency: 'usd'
+                }
+            });
+
+            return { id: assetId, ...data };
+        } catch (err) {
+            console.warn(err);
+            throw new Error('FAILED_TO_GET_HISTORICAL_DATA');
         }
     }
 }
