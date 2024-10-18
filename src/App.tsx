@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './App.css';
 import Select from './components/Select';
 import { type Option } from './components/Select/types';
 import TabSwitch from './components/TabSwitch';
 import { IoIosClose } from "react-icons/io";
+import useAPI from './api/useAPI';
 type TimePeriod = 'week' | 'month' | 'year';
 
 const FIXED_ASSETS: Option[] = [
@@ -40,6 +41,17 @@ const FIXED_TIME_PERIODS: Option[] = [
 function App() {
     const [assets, setAssets] = useState<string[]>([]);
     const [timePeriod, setTimePeriod] = useState<TimePeriod>('week');
+    const { assetsAPI } = useAPI();
+
+    const loadAssets = async () => {
+        const works = await assetsAPI.getCoinsList();
+
+        console.log({ works });
+    }
+
+    useEffect(() => {
+        loadAssets();
+    }, []);
 
     return (
         <main className="container space-y-8">
