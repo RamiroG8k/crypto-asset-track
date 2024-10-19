@@ -28,7 +28,7 @@ const Select: React.FC<SelectProps> = ({ onValueChange, options, values = [] }) 
                     <button
                         className={cn(
                             'px-4 py-1 text-left border border-content/10 rounded-lg',
-                            values.includes(value) && 'bg-primary/20'
+                            values.includes(value) && 'bg-primary/15'
                         )}
                         key={value}
                         onClick={() => onValueChange(value)}
