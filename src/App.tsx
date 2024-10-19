@@ -7,6 +7,7 @@ import TabSwitch from './components/TabSwitch';
 import { useAssets } from './providers/AssetsProvider/AssetsProvider';
 import { IoIosClose } from 'react-icons/io';
 import { AssetData } from './api/AssetsAPI/types';
+import Chart from './components/Chart';
 
 enum TimePeriod {
     week = 7,
@@ -30,6 +31,49 @@ const FIXED_TIME_PERIODS: Option[] = [
         value: 'year'
     }
 ];
+
+type DataForChart = Record<string, number | string>;
+
+const formatDataForChart = (assets: AssetData[]): DataForChart[] => {
+    const dateMap = new Map<string, Record<string, number | string>>();
+
+    for (const { id, prices } of assets) {
+        for (const [timestamp, price] of prices) {
+            const localeDate = new Date(timestamp).toLocaleDateString();
+
+            let dateData = dateMap.get(localeDate);
+
+            if (!dateData) {
+                dateData = { date: localeDate };
+                dateMap.set(localeDate, dateData);
+            }
+
+            dateData[id] = price;
+        }
+    }
+
+    return Array.from(dateMap.values());
+};
+
+const formatLinesForChart = (elements: string[]) => {
+    const COLORS = {
+        bitcoin: "#F7931A",
+        ethereum: "#627EEA",
+        binancecoin: "#F3BA2F",
+        solana: "#00FFA3",
+        tron: "#FF0013",
+        'the-open-network': "#0098ea",
+        cardano: "#0033AD",
+        avalanche: "#E84142",
+        bitcoin_cash: "#8DC351",
+        near: "#000000",
+    }
+
+    return elements.map(key => ({
+        key,
+        color: COLORS[key as keyof typeof COLORS]
+    }));
+}
 
 function App() {
     const { assets, loadAssetData } = useAssets();
@@ -106,11 +150,7 @@ function App() {
                 </div>
 
                 <div className="h-[30rem] w-full shadow-sm rounded-xl p-4 border border-content/10">
-                    {/*
-             * Component to handle the performance comparison by period of time selected
-             *
-             * <Chart data={[]} />
-             * */}
+                    <Chart<DataForChart> data={formatDataForChart(chartData)} lines={formatLinesForChart(selectedAssets)} />
                 </div>
             </div>
         </main>

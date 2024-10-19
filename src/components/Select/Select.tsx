@@ -13,7 +13,7 @@ const Select: React.FC<SelectProps> = ({ onValueChange, options, values = [] }) 
             )}
         >
             <button
-                className="h-full center z-10 bg-white rounded-lg border border-content/10"
+                className="h-full center z-50 bg-white rounded-lg border border-content/10"
                 type="button"
                 onClick={() => setIsOpen(prev => !prev)}
             >
@@ -21,7 +21,7 @@ const Select: React.FC<SelectProps> = ({ onValueChange, options, values = [] }) 
             </button>
 
             <div className={cn(
-                'border border-content/10 absolute flex flex-col p-1.5 pt-4 gap-2 transition-all duration-300 bg-white w-full translate-y-8 overflow-y-scroll',
+                'z-40 border border-content/10 absolute flex flex-col p-1.5 pt-4 gap-2 transition-all duration-300 bg-white w-full translate-y-8 overflow-y-scroll',
                 isOpen ? 'max-h-64 opacity-100 rounded-b-lg' : 'max-h-0 opacity-0'
             )}>
                 {options && options.map(({ label, value }) => (

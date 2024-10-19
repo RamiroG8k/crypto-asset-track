@@ -13,14 +13,14 @@
     --color-accent: 225deg 15% 60%;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     :root {
         --color-background: 0deg 0% 10%;
         --color-content: 0deg 0% 100%;
         --color-primary: 25deg 100% 55%;
         --color-accent: 225deg 15% 60%;
     }
-}
+} */
 
 body {
     background: hsl(var(--color-background));
