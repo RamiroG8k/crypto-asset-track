@@ -8,6 +8,9 @@ import { useAssets } from './providers/AssetsProvider/AssetsProvider';
 import { IoIosClose } from 'react-icons/io';
 import { AssetData } from './api/AssetsAPI/types';
 import Chart from './components/Chart';
+import { client } from './web3/client';
+import { ConnectButton } from 'thirdweb/react';
+import { createWallet } from 'thirdweb/wallets';
 
 enum TimePeriod {
     week = 7,
@@ -113,7 +116,7 @@ function App() {
 
             <div className="flex flex-col gap-3 items-start bg-white shadow-lg rounded-xl p-4">
                 <div className="flex items-center w-full justify-between">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 h-full">
                         <div className="flex gap-4">
                             <Select
                                 multiple
@@ -130,9 +133,14 @@ function App() {
                         </div>
                     </div>
 
-                    <button className="h-full w-32 border" type="button">
-                        Login
-                    </button>
+                    <ConnectButton
+                        client={client}
+                        wallets={[
+                            createWallet("io.metamask"),
+                            createWallet("com.coinbase.wallet"),
+                        ]}
+                        theme="light"
+                    />
                 </div>
 
                 <div className="h-6 flex gap-2">
